@@ -153,10 +153,87 @@ public class ArrayInterview2 {
         return count;
     }
 
+    static boolean increasingTriplet(int[] nums) {
+
+        int len = nums.length;
+        if(len <3) return false;
+        for(int i =0; i< len -2;i++){
+            int j = i+1;
+            while(j < len && nums[j] <= nums[i])
+                j++;
+            if(j == len|| j == len -1)
+                continue;
+            int k = j+1;
+            while(k < len && nums[k] <= nums[j] && nums[k] <=nums[i])
+                k++;
+            if(k == len)
+                continue;
+           else if ( k < len && !(nums[k] > nums[j] && nums[k] >nums[i]) )
+                continue;
+            return true;
+        }
+        return false;
+    }
+
+    /**EX:5,3,5,3
+     * :3,1 len 2
+     * 4,4 len 1*/
+    static int zigzag(int[] a) {
+        int len = a.length;
+        if(len == 2 ){
+            if( a[0] == a[1]) return 1;
+            return 2;
+        }
+        int lenSequence = 1;
+        for(int i=0;i< len-2; i++){
+            boolean isGreater = true;
+            if(a[i] >= a[i+1])
+                isGreater = false;
+            int j = i+1;
+            while(j <len -1 ){
+                isGreater = !isGreater;
+                if(isGreater && a[j] < a[j+1] && a[j] <a[j-1])
+                    j++;
+                else if(!isGreater && a[j] > a[j+1] && a[j] >a[j-1])
+                    j++;
+                else {
+                    break;
+                }
+            }
+            if( j - i +1 > lenSequence){
+                lenSequence = j - i+1;
+            }
+        }
+        return lenSequence;
+
+    }
+
+    /**A periodic sequence s is defined as follows:
+     * s[0], a, b and m are all given positive integers;
+     * s[i] for i > 0 is equal to (a * s[i - 1] + b) mod m.
+     * Find the period of s, i.e. the smallest integer T such that for each i > k (for some integer k): s[i] = s[i + T].
+     * Example
+     * For s0 = 11, a = 2, b = 6, and m = 12, the output should be
+     * periodicSequence(s0, a, b, m) = 2.
+     * The sequence would look like this: 11, 4, 2, 10, 2, 10, 2, 10, 2, 10....*/
+    static int periodicSequence(int s0, int a, int b, int m) {
+
+        List<Integer> list = new ArrayList<>();
+        list.add(s0);
+        int index =-1;
+        for(int i=1;index == -1 ;i++){
+            int value = (list.get(i-1) *a +b) %m;
+            if(list.indexOf(value) != -1 || index != list.indexOf(value))
+                index = list.size() - list.indexOf(value);
+            list.add(value);
+        }
+        return index;
+    }
+
 
     public static void main(String...args){
 
-        ExamRoom examRoom = new ExamRoom(10);
+       // ExamRoom examRoom = new ExamRoom(10);
 //        System.out.println(examRoom.seat());
 ////        System.out.println(examRoom.seat());
 ////        System.out.println(examRoom.seat());
@@ -165,8 +242,7 @@ public class ArrayInterview2 {
 ////        System.out.println(examRoom.seat());
       //  System.out.println(maxDistToClosest(new int[]{0,0,0,0,0,0,0,0,0,1}));
 
-        MyCalendar myCalendar = new MyCalendar();
-        System.out.println(coinChange(new int[]{186,419,83,408}, 6249));
+        System.out.println(periodicSequence(11,2,6,12));
 
    }
 
