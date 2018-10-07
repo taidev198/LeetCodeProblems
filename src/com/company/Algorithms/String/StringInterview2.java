@@ -108,24 +108,151 @@ public class StringInterview2 {
         return maxLen;
     }
 
+    /**Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+     * Examples:
+     * s = "leetcode"
+     * return 0.
+     * s = "loveleetcode",
+     * return 2.*/
     static int firstUniqChar(String s){
-        Hashtable<Character, Integer> hashtable = new Hashtable<>();
-        for (int i = 0; i < s.length(); i++) {
+        if(s.length() == 0) return -1;
+        Map<Character, Integer> hashtable = new LinkedHashMap<>();//Using LinkedHashMap to
+        for (int i = 0; i < s.length(); i++) {//avoid sorted key.
             char ch = s.charAt(i);
             if (!hashtable.containsKey(ch))
                 hashtable.put(ch, i);
             else {
-
-                hashtable.remove(ch);
+                hashtable.replace(ch, (int)hashtable.get(ch), -1);
             }
         }
-         List<Map.Entry<Character, Integer>> entries = new ArrayList<>(hashtable.entrySet());
-        return entries.get(0).getValue();
+
+        List<Map.Entry<Character, Integer>> entries = new ArrayList<>(hashtable.entrySet());
+        for(Map.Entry<Character, Integer> entry:
+                entries){
+            if(entry.getValue() != -1)
+                return entry.getValue();
+        }
+        return -1;
     }
+
+    static String frequencySort(String s) {
+        StringBuilder ans = new StringBuilder();
+        int len = s.length();
+
+        int[] bucketSort = new int['z' - 'A' + 1];
+        for (int i = 0; i < len; i++) {
+            if (s.charAt(i) <= 'z' && s.charAt(i) >='a')
+            bucketSort[Math.abs(s.charAt(i)-'a')]++;
+            else bucketSort[Math.abs(s.charAt(i)-'A' + 26)]++;
+        }
+        for (int i = 0; i < bucketSort.length; i++) {
+            if (bucketSort[i] == 0)
+                continue;
+            int maxIdx = i;
+            for (int k = 0; k < len; k++) {
+                if (bucketSort[k] == 0)
+                    continue;
+                if (bucketSort[maxIdx] < bucketSort[k])
+                    maxIdx = k;
+
+            }
+            for (int j = 0; j <bucketSort[maxIdx] ; j++) {
+                if ( maxIdx < 26)
+                ans.append((char) (maxIdx +'a') );
+                else ans.append((char) (maxIdx -26 +'A') );
+            }
+            bucketSort[maxIdx] = -1;
+        }
+
+        return ans.toString();
+    }
+
+    static  String reverseOnlyLetters(String S) {
+        int len = S.length();
+        char[] charArray = S.toCharArray();
+        int left = 0, right = len -1;
+        while(left < right){
+            while(left < right && !Character.toString( charArray[left]).matches("[a-zA-Z]") ) left++;
+            while( right >left&& !Character.toString( charArray[right]).matches("[a-zA-Z]") ) right--;
+
+            char temp = charArray[right];
+            charArray[right] = charArray[left];
+            charArray[left] = temp;
+            left++;
+            right--;
+        }
+
+        return new String(charArray);
+    }
+
+    static int[] bestSeat(int[][] a) {
+        int[] ans = new int[]{-1,-1};
+        int r = a.length;
+        int c = a[0].length;
+        int max =-9, rMax =9999, cMax = 9999;
+        for(int i= 0;i< r; i++){
+            for( int j = 0; j< c; j++){
+                int temp = 0;
+                if(a[i][j] == -1){
+                    if(j < c - 1 && a[i][j+1] > 0)
+                        temp += a[i][j+1];
+                    if(j >0  && a[i][j-1] > 0)
+                        temp += a[i][j-1];
+                    if(i < r - 1 && a[i+1][j] > 0)
+                        temp += a[i+1][j];
+                    if(i >0 && a[i-1][j] > 0)
+                        temp += a[i-1][j];
+
+                    if(j < c - 1 && i < r -1 && a[i+1][j+1] > 0)
+                        temp += a[i+1][j+1];
+                    if(j >0 && i>0 && a[i-1][j-1] > 0)
+                        temp += a[i-1][j-1];
+                    if(i >0 && j< c - 1 && a[i-1][j+1] > 0)
+                        temp += a[i-1][j+1];
+                    if(i < r -1 && j >0 && a[i+1][j-1] > 0)
+                        temp += a[i+1][j-1];
+                    if(temp >= max){
+                        if(temp == max &&((rMax > i && cMax == j) ||(cMax > j && rMax == i) ) ){
+                            rMax = i;
+                            cMax = j;
+                        }else if(temp > max){
+                            max = temp;
+                            rMax = i;
+                            cMax = j;
+                        }
+                        ans[0] = rMax;
+                        ans[1] = cMax;
+                    }
+
+                }
+            }
+        }
+        return ans;
+    }
+
+
+
     public static void main(String...args){
-//        System.out.println(checkInclusion("adc","dcda"));
         List<Character> characters = new ArrayList<>();
 
-        System.out.println(firstUniqChar("leetcode"));
+        //System.out.println(frequencySort("Mymommaalwayssaid,\"Lifewaslikeaboxofchocolates.Youneverknowwhatyou'regonnaget."));
+        System.out.println(Arrays.toString(bestSeat(new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 3, 6, 0, 3, -1, 0, 2, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 8, 3, 0, 8, 8, 0, 9, 7, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, -1, 3, 0, 5, 1, 0, 8, 1, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 2, -1, 0, 3, 4, 0, 4, 5, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0,0}})));
+    }
+
+     class test{
+        private test(){};
+    }
+    class test1 extends test{
+
     }
 }

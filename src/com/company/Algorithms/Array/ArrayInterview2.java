@@ -230,6 +230,68 @@ public class ArrayInterview2 {
         return index;
     }
 
+    /**Example 1:
+     * * Input:
+    * [[1,1,1],
+    * [1,0,1],
+    * [1,1,1]]
+    * Output:
+    * [[0, 0, 0],
+    * [0, 0, 0],
+    * [0, 0, 0]]
+    * Explanation:
+    * For the point (0,0), (0,2), (2,0), (2,2): floor(3/4) = floor(0.75) = 0
+    * For the point (0,1), (1,0), (1,2), (2,1): floor(5/6) = floor(0.83333333) = 0
+    * For the point (1,1): floor(8/9) = floor(0.88888889) = 0*/
+    static int[][] imageSmoother(int[][] M) {
+
+        int row = M.length;
+        int col = M[0].length;
+        if(row == 1 && col == 1) return M;
+        int[][] ans = new int[row][col];
+        for (int i =0; i< row ; i++){
+            for (int j = 0; j < col; j++) {
+                double totalNum = M[i][j];
+                double countNeighbors = 1;
+                if(i < row -1){
+                    totalNum += M[i+1][j];
+                    countNeighbors++;
+                }
+
+                if(j < col -1){
+                    countNeighbors++;
+                    totalNum += M[i][j+1];
+                }
+
+                if(i >0 ) {
+                    totalNum += M[i-1][j];
+                    countNeighbors++;
+                }
+                if(j >0) {
+                    totalNum += M[i][j-1];
+                    countNeighbors++;
+                }
+                if(i < row -1 && j < col -1) {
+                    countNeighbors++;
+                    totalNum += M[i+1][j+1];
+                }
+                if(i > 0 && j < col -1) {
+                    totalNum += M[i-1][j+1];
+                    countNeighbors++;
+                }
+                if(i >0 && j > 0) {
+                    totalNum += M[i-1][j-1];
+                    countNeighbors++;
+                }
+                if(i < row -1 && j > 0) {
+                    totalNum += M[i+1][j-1];
+                    countNeighbors++;
+                }
+                ans[i][j] = (int)Math.floor(totalNum / countNeighbors);
+            }
+        }
+        return ans;
+    }
 
     public static void main(String...args){
 

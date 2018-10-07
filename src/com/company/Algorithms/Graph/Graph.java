@@ -35,6 +35,37 @@ public class Graph {
         changIsLandToWater(grid, i-1,j);//down
     }
 
+    static int numIslands1(char[][] grid) {
+        if(grid.length ==0)
+            return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int count=0;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j]=='1'){//if grid[i][j] inside island so check all neibough of its.
+                    count +=  countNumIsLand(grid, i, j, grid.length, grid[0].length);;
+                }
+            }
+        }
+
+        return count;
+
+    }
+
+    static int countNumIsLand(char[][] grid, int r, int c, int row, int col){
+        if(r <0 || r>= row || c <0 || c >= col ||grid[r][c] == '0')//if out of index of grid then return 0
+            return 0;
+        int num = 1;
+        grid[r][c] = '0';
+        countNumIsLand(grid, r+1, c, row, col);
+        countNumIsLand(grid, r-1, c, row, col);
+        countNumIsLand(grid, r, c+1, row, col);
+        countNumIsLand(grid, r, c-1, row, col);
+        return num;
+    }
+
     static void solve(char[][] board) {
 
         int row = board.length;
