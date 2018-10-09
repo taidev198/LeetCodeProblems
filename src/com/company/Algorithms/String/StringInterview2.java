@@ -230,23 +230,46 @@ public class StringInterview2 {
         return ans;
     }
 
-
+    /**Example:
+     * Input: words = ["gin", "zen", "gig", "msg"]
+     * Output: 2
+     * Explanation:
+     * The transformation of each word is:
+     * "gin" -> "--...-."
+     * "zen" -> "--...-."
+     * "gig" -> "--...--."
+     * "msg" -> "--...--."
+     * There are 2 different transformations, "--...-." and "--...--.".*/
+    static int uniqueMorseRepresentations(String[] words) {
+        String[] encode = new String[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        HashSet<String> ans = new HashSet<>();
+        for(int i = 0; i < words.length; i++){
+            String temp = "";
+            for(int j = 0; j< words[i].length(); j++)
+                temp += encode[words[i].charAt(j) -'a'];
+            ans.add(temp);
+        }
+        return ans.size();
+    }
 
     public static void main(String...args){
         List<Character> characters = new ArrayList<>();
 
         //System.out.println(frequencySort("Mymommaalwayssaid,\"Lifewaslikeaboxofchocolates.Youneverknowwhatyou'regonnaget."));
-        System.out.println(Arrays.toString(bestSeat(new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 3, 6, 0, 3, -1, 0, 2, 3, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 8, 3, 0, 8, 8, 0, 9, 7, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, -1, 3, 0, 5, 1, 0, 8, 1, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 2, -1, 0, 3, 4, 0, 4, 5, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0,0}})));
+//        System.out.println(Arrays.toString(bestSeat(new int[][]{
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 3, 6, 0, 3, -1, 0, 2, 3, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 8, 3, 0, 8, 8, 0, 9, 7, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, -1, 3, 0, 5, 1, 0, 8, 1, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 2, -1, 0, 3, 4, 0, 4, 5, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0,0}})));
+
+        System.out.println(uniqueMorseRepresentations(new String[]{"gin", "zen", "gig", "msg"}));
+        System.out.println( "--...-.".contains( "--...-."));
     }
 
      class test{
