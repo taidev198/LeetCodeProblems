@@ -242,10 +242,10 @@ public class StringInterview2 {
      * There are 2 different transformations, "--...-." and "--...--.".*/
     static int uniqueMorseRepresentations(String[] words) {
         String[] encode = new String[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
-        HashSet<String> ans = new HashSet<>();
+        HashSet<String> ans = new HashSet<>();//using hashset to avoid duplicate value
         for(int i = 0; i < words.length; i++){
-            String temp = "";
-            for(int j = 0; j< words[i].length(); j++)
+            String temp = "";//using string instead StringBuilder because StringBuilder has no contains method
+            for(int j = 0; j< words[i].length(); j++)//to check two strings are whether equal.
                 temp += encode[words[i].charAt(j) -'a'];
             ans.add(temp);
         }

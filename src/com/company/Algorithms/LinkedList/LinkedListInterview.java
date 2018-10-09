@@ -1,5 +1,7 @@
 package com.company.Algorithms.LinkedList;
 
+import java.util.List;
+
 public class LinkedListInterview {
     static class ListNode {
         int val;
@@ -47,6 +49,21 @@ public class LinkedListInterview {
         return head;
     }
 
+    static void  travelReverseList(ListNode head){
+        if (head == null )
+            return;
+        travelReverseList(head.next);
+        System.out.println(head.val);
+
+    }
+    static void travelInOrderList(ListNode head){
+        if (head == null)
+            return;
+        System.out.println(head.val);
+        travelReverseList(head.next);
+
+    }
+
     public static void main(String...args){
 
         ListNode root = new ListNode(3);
@@ -54,12 +71,14 @@ public class LinkedListInterview {
         root.next.next = new ListNode(3);
         root.next.next.next = new ListNode(2);
         root.next.next.next.next = new ListNode(5);
-        root.next.next.next.next.next = new ListNode(2);
+        root.next.next.next.next.next = new ListNode(2); travelReverseList(root);
         root = insertionSortList(root);
         while (root!= null){
             System.out.println(root.val);
             root = root.next;
         }
+        System.out.println();
+
 
         class Base{
             private void f(){
