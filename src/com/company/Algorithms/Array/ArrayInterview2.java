@@ -293,18 +293,40 @@ public class ArrayInterview2 {
         return ans;
     }
 
+    static  int maxProduct(int[] nums) {
+        int len = nums.length;
+        if(len == 1)
+            return nums[0];
+        int neg = 0;
+        int pos = 0;
+        int max = 0;
+        int value =1;
+        int lenght = 0;
+        for(int i=0; i<len ;i++){
+            if(nums[i] == 0){
+                max = Math.max(max, value);
+                value = 1;
+                lenght =0;
+
+            }
+            else {
+                if(nums[i] <0){
+                    neg++;
+                    max = Math.max(max, value);
+                }
+                else pos++;
+                value *= nums[i];
+                lenght ++;
+            }
+        }
+        if(neg == lenght)
+            return value;
+        return max;
+    }
+
+
     public static void main(String...args){
-
-       // ExamRoom examRoom = new ExamRoom(10);
-//        System.out.println(examRoom.seat());
-////        System.out.println(examRoom.seat());
-////        System.out.println(examRoom.seat());
-////        System.out.println(examRoom.seat());
-////        examRoom.leave(4);
-////        System.out.println(examRoom.seat());
-      //  System.out.println(maxDistToClosest(new int[]{0,0,0,0,0,0,0,0,0,1}));
-
-        System.out.println(periodicSequence(11,2,6,12));
+        System.out.println(maxProduct(new int[]{-1,0}));
 
    }
 
