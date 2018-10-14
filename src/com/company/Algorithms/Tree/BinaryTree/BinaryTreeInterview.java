@@ -1,7 +1,5 @@
 package com.company.Algorithms.Tree.BinaryTree;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,20 +136,37 @@ public class BinaryTreeInterview {
         root.right = buildTree1Helper(preorder, inorder, i+1, right, idxRoot+1);
         return root;
     }
+
+    static boolean isBinarySearchTree(TreeNode root){
+        return validate(root, null, null);
+    }
+
+     static  boolean validate(TreeNode node, Integer min, Integer max) {
+            if (node == null) {
+                return true;
+            }
+
+            if ((min != null && node.val <= min) || (max != null && node.val >= max)) {
+                return false;
+            }
+
+            return validate(node.left, min, node.val) && validate(node.right, node.val, max);
+        }
     public static void main(String...args){
-        TreeNode li = new TreeNode(2);
-        li.left = new TreeNode(2);
-        li.left.left = new TreeNode(3);
+        TreeNode li = new TreeNode(1);
+        li.left = new TreeNode(-1);
+      //  li.left.right = new TreeNode(3);
 //        li.left.right = new TreeNode(3);
         //li.left.left.left = new TreeNode(7);
 
-        li.right = new TreeNode(5);
-        li.right.right = new TreeNode(5);
-        li.right.left = new TreeNode(5);
+//        li.right = new TreeNode(5);
+//        li.right.right = new TreeNode(3);
+//        li.right.left = new TreeNode(3);
 //        li.right.right.right = new TreeNode(1);
 //        li.right.right.left = new TreeNode(5);
         TreeNode res = buildTree1(new int[]{1,2,3}, new int[]{2,3,1});
-        System.out.println(res.left.left.right.val);
+        System.out.println(isBinarySearchTree(li));
 
+       
     }
 }

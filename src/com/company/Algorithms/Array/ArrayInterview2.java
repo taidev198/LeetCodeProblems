@@ -325,8 +325,40 @@ public class ArrayInterview2 {
     }
 
 
+    static  int partitionDisjoint(int[] A) {
+        int len = A.length;
+        int preMax = A[0];
+        int curMax ;
+        int length =1;
+        boolean isGreater = true;
+        for(int i =1; i<len-1;i++){
+            curMax =A[i];
+            if(curMax < preMax){
+                length++;
+                preMax = Math.max(preMax,curMax);
+            }else{
+                int j = i;
+                while(j < len-1){
+
+                    if(A[j] < preMax){
+                        isGreater = false;
+                        break;
+                    }
+                    j++;
+                }
+                preMax = Math.max(preMax,curMax);
+                if(isGreater){
+                    return i;
+                }
+                isGreater = true;
+                i=j;
+            }
+        }
+        return length;
+    }
+
     public static void main(String...args){
-        System.out.println(maxProduct(new int[]{-1,0}));
+        System.out.println(partitionDisjoint(new int[]{24,11,49,80,63,8,61,22,73,85}));
 
    }
 
