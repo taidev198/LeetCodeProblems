@@ -194,15 +194,16 @@ public class TreeInterview {
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()){
-            TreeNode cur = stack.peek();
-            if (cur != null){
-                ans.add(cur.val);
-                stack.push(cur.left);
+            TreeNode cur = stack.peek();//get top element of stack
+            if (cur != null){//check if it is whether null
+                ans.add(cur.val);//add value to ans
+                stack.push(cur.left);//push left node to stack
             }else{
-                stack.pop();
-                if (!stack.isEmpty())
-                stack.push(stack.pop().right);
-            }
+                     stack.pop();//pop null node off stack
+                    if (stack.isEmpty())//check stack is whether empty
+                        break;//stack is empty so completed.
+                        stack.push(stack.pop().right);//pop top element off stack and push
+            }                                         // right node of it to stack.
         }
         return ans;
     }
@@ -224,10 +225,11 @@ public class TreeInterview {
                 stack.push(cur.left);
             }else {
                 stack.pop();
-                if (!stack.isEmpty()){
-                    ans.add(stack.peek().val);
-                    stack.push(stack.pop().right);
-                }
+                if (stack.isEmpty())
+                    break;
+                    cur = stack.pop();
+                    ans.add(cur.val);
+                    stack.push(cur.right);
             }
         }
         return ans;
@@ -634,7 +636,7 @@ public class TreeInterview {
 //        for (int i = 0; i < res.size(); i++) {
 //            System.out.println(res.get(i));
 //        }
-       // System.out.println(zigzagLevelOrder(li));
-
+        System.out.println(preOrderTraversal(li));
+        preOrderTraversal(li);
     }
 }
